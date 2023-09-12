@@ -35,10 +35,6 @@ const Spinner = ({ crl, loading }: SpinnerProps) => {
       <div></div>
       <div></div>
     </div>
-    // <div style={{ opacity: '0.5' }}>
-    //     <ClipLoader color={color} loading={loading}
-    //     className={css({display: 'block', margin: '0 auto', borderColor: 'red', marginTop: '300px' })} size={150}  />
-    // </div>
   );
 };
 
