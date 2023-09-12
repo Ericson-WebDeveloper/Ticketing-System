@@ -15,14 +15,6 @@ class QAResourcesTickets extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-
-    // https://laracasts.com/discuss/channels/laravel/api-resource-collection-returns-without-meta-and-link-keys
-    // this is different from other resources because of extends ResourceCollection
-    // use this extends if wrapping or make like this
-
-    // php artisan make:resource QAResourcesTickets --collection -> to generate this
-    //  php artisan make:resource QAResourcesTickets -> this for normal 
-    // https://laravel.com/docs/9.x/eloquent-resources for more info
     public function toArray($request)
     {
         // return ['data' => $this->collection];
