@@ -79,7 +79,6 @@ class AuthController extends Controller
     public function forgotpassword(Request $request)
     {
         try {
-            Log::info('here');
             $user = User::where('email', $request->email)->first();
             if(!$user) {
                 return $this->helpercontroller->returnResponse(['error' => 'User Email not Found'], 400);
@@ -119,12 +118,6 @@ class AuthController extends Controller
 
         try {
             $user = User::where('email', $request->email)->first();
-            
-            // if($user && !$user->email_verified_at) {
-            //     return response()->json([
-            //         'error' => 'Account not verified. please verified first'
-            //     ], 400);
-            // }
 
             if(!$user) {
                 return $this->helpercontroller->returnResponse([
