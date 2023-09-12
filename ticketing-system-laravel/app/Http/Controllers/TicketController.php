@@ -71,7 +71,6 @@ class TicketController extends Controller
         try {
             $ticket = Ticket::query()->with(['creator', 'progress', 'qa', 'owner'])->where('id', $id);
             if($request->user()->job->name == 'Programmer') {
-                Log::info($request->user()->job->name . ' ' . $request->user()->id . ' ' . $request->user()->name);
                 $ticket = $ticket->where('owner_id', $request->user()->id);
             }
             $ticket = $ticket->first();
@@ -110,20 +109,13 @@ class TicketController extends Controller
                 return $this->helpercontrol->returnResponse(['error' => 'Ticket not Found'], 400);
             }
 
-            // $ticket->programmer_id = $request->programmer_id;
-            // $ticket->qa_id' => $request->qa_id,
-            //     'owner_id' => $request->programmer_id,
-            // ]);
-
             $ticket->programmer_id = $request->programmer_id;
             $ticket->qa_id = $request->qa_id;
             $ticket->owner_id = $request->programmer_id;
             $ticket->progress->status_id = 6;
             $response = $ticket->push();
             // send Email Notify That this was Reassign to other;
-
             if($response) {
-                // Log::info($response);
                 // $r = Mail::to($request->email)->send(new TicketAssignMail($ticket)); 
                 DB::commit();
                 return $this->helpercontrol->returnResponse(['message' => 'Ticket Was Assigned Success!', 
@@ -223,9 +215,6 @@ class TicketController extends Controller
 
     public function countTicketsByStatus() {
         try {
-            // TicketStatus::select('status_name')->groupBy('status_name')->count();
-            // DB::raw('COUNT(issue_subscriptions.issue_id) as followers'))
-            // $counts = DB::table('ticket_statuses')->select(['status_name', DB::raw('COUNT(*) as count_total')])
             $counts = DB::table('tickets')->select(['status_name', DB::raw('COUNT(*) as count_total')])
             ->leftJoin('ticket_progress', 'ticket_progress.ticket_id', '=', 'tickets.id')
             ->leftJoin('ticket_statuses', 'ticket_progress.status_id', '=', 'ticket_statuses.id')
